@@ -8,5 +8,6 @@ export default {
     notificationImg: require("../assets/images/Notification.png"),
     vectorImg: require("../assets/images/Vector.png"),
     arrowRight: require("../assets/images/ArrowRight.png"),
-    groupInvitationCode: require("../assets/images/Group1000002270.png")
+    groupInvitationCode: require("../assets/images/Group1000002270.png"),
+    bgItemImg: require("../assets/images/bgItem.png")
 }
