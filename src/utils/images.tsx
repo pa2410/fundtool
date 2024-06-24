@@ -7,5 +7,6 @@ export default {
     eyeClose: require("../assets/images/eye.png"),
     notificationImg: require("../assets/images/Notification.png"),
     vectorImg: require("../assets/images/Vector.png"),
-    arrowRight: require("../assets/images/ArrowRight.png")
+    arrowRight: require("../assets/images/ArrowRight.png"),
+    groupInvitationCode: require("../assets/images/Group1000002270.png")
 }

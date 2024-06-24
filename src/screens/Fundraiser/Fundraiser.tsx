@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -9,21 +9,38 @@ import {
   View,
 } from 'react-native';
 import images from '../../utils/images';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {fs} from '../../utils/styleUtils';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { fs, hs, vs } from '../../utils/styleUtils';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Created from '../Tabs/Created/Created';
 import Joined from '../Tabs/Joined/Joined';
 import FlatListItem from '../../components/FlatListItem';
+import Container from '../../components/Container';
+import { useSelector } from 'react-redux';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Fundraiser = () => {
   const insets = useSafeAreaInsets();
 
+  const [isTab, setIsTab] = useState<boolean>(true);
+
+  const token = useSelector((state) => state.auth.token);
+  console.log('token', token);
+
   const renderHeader = useMemo(() => {
     return (
       <View>
+        <Image
+          source={images.groupInvitationCode}
+          resizeMode="contain"
+          style={{
+            width: hs(315),
+            height: vs(172),
+            alignSelf: 'center',
+            marginTop: vs(15)
+          }}
+        />
         <View
           style={{
             elevation: 15,
@@ -37,11 +54,11 @@ const Fundraiser = () => {
             marginHorizontal: 20,
             padding: 10,
           }}>
-          <View style={{flex: 1}}>
-            <Text style={{fontWeight: '700', fontSize: fs(22)}}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontWeight: '700', fontSize: fs(22) }}>
               Create a Fundraiser
             </Text>
-            <Text style={{fontWeight: '400', fontSize: fs(12)}}>
+            <Text style={{ fontWeight: '400', fontSize: fs(12) }}>
               Schedule a fundraiser for your group
             </Text>
           </View>
@@ -67,7 +84,7 @@ const Fundraiser = () => {
             />
           </View>
 
-          <View style={{position: 'absolute', bottom: 0, right: 0}}>
+          <View style={{ position: 'absolute', bottom: 0, right: 0 }}>
             <Image
               source={images.vectorImg}
               resizeMode="contain"
@@ -87,18 +104,35 @@ const Fundraiser = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontWeight: '600', fontSize: fs(18), color: '#000000'}}>
+          <Text style={{ fontWeight: '600', fontSize: fs(18), color: '#000000' }}>
             Top Fundraisers
           </Text>
-          <Text style={{fontWeight: '600', fontSize: fs(12), color: '#1D6B94'}}>
+          <Text style={{ fontWeight: '600', fontSize: fs(12), color: '#1D6B94' }}>
             View All
           </Text>
         </View>
+
+        <Container containerStyle={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+          mpContainer={{ mh: 0, mt: 15 }}
+        >
+          <Container onPress={() => setIsTab(true)} containerStyle={{ borderBottomWidth: 1, width: '50%', alignItems: 'center', paddingBottom: vs(5), borderColor: isTab == true ? 'green' : 'white' }}>
+            <Text style={{ color: isTab == true ? 'black' : 'grey' }}>Active</Text>
+          </Container>
+
+          <Container onPress={() => setIsTab(false)} containerStyle={{ borderBottomWidth: 1, width: '50%', alignItems: 'center', paddingBottom: vs(5), borderColor: isTab == false ? 'green' : 'white' }}>
+            <Text style={{ color: isTab == false ? 'black' : 'grey' }}>Completed</Text>
+          </Container>
+        </Container>
+
       </View>
     );
   }, []);
   return (
-    <ImageBackground style={{flex: 1}} source={images.bgImg}>
+    <ImageBackground style={{ flex: 1 }} source={images.bgImg}>
       <View
         style={{
           flexDirection: 'row',
@@ -127,7 +161,7 @@ const Fundraiser = () => {
         />
       </View>
 
-      <View style={{flex: 1, backgroundColor: 'white', marginTop: 15}}>
+      <View style={{ flex: 1, backgroundColor: 'white', marginTop: 15 }}>
         <FlatList
           data={[
             'fruit',
@@ -142,7 +176,7 @@ const Fundraiser = () => {
             'fruit',
             'fruit',
           ]}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return <FlatListItem />;
           }}
           ListHeaderComponent={renderHeader}

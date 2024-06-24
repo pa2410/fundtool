@@ -29,7 +29,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
                 </TouchableOpacity>
             )}
             {leftCustomView && leftCustomView(
-
+                
             )}
             <TextInput
                 style={[styles.input, inputStyle]}
