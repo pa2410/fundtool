@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from '../screens/Login/Login';
 import Fundraiser from '../screens/Fundraiser/Fundraiser';
-import { StatusBar } from 'react-native';
+import { ActivityIndicator, StatusBar, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setToken } from '../features/authSlice';
@@ -12,6 +12,8 @@ import { RootState } from '@reduxjs/toolkit/query';
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const token = useSelector((state: RootState) => state.auth.token);
     const dispatch = useDispatch();
@@ -25,11 +27,21 @@ const RootNavigator = () => {
                 }
             } catch (error) {
                 console.error('Error fetching token from AsyncStorage:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchToken();
-    }, []);
+    }, [dispatch]);
+
+    if (isLoading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="green" />
+            </View>
+        );
+    }
 
     return (
         <NavigationContainer>
