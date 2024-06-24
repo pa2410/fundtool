@@ -6,6 +6,8 @@ import { fs } from "../../utils/styleUtils";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Created from "../Tabs/Created/Created";
 import Joined from "../Tabs/Joined/Joined";
+import LinearGradient from "react-native-linear-gradient";
+import CustomTab from "../../components/CustomTab";
 
 const Tab = createMaterialTopTabNavigator();
 
